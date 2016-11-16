@@ -20,6 +20,8 @@
     "jshint": "jshint .",
     "pretest": "npm run jshint",
     "gulp": "gulp",
+    "preinstall": "npm install -g gulp",
+    "prestart": "npm run gulp",
     "start": "gulp serve",
     "test": "mocha"
   },
