@@ -1,0 +1,252 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2016-11-14T23:58:46Z",
+        "title": "RewindPolo",
+        "description": "API to push season, team and game information from the Rewind Polo (tm) mobile appication\n",
+        "contact": {
+            "name": "Ian F. McCallum",
+            "email": "ian@rewindpolo.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "31spx8a5fc.execute-api.us-east-1.amazonaws.com",
+    "basePath": "/development",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/season": {
+            "put": {
+                "tags": [
+                    "season"
+                ],
+                "summary": "Add a new Season",
+                "description": "Add a new Season. Source located at [https://github.com/ianfmc/RWPAddSeason.git](https://github.com/ianfmc/RWPAddSeason.git)",
+                "operationId": "addseason",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Season Object",
+                        "description": "season properties",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Season"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/NewObjectResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/seasons": {
+            "get": {
+                "tags": [
+                    "season"
+                ],
+                "summary": "Get all Seasons",
+                "description": "Get all Seasons. Source located at [https://github.com/ianfmc/RWPAddSeason.git](https://github.com/ianfmc/RWPAddSeason.git)",
+                "operationId": "getseasons",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful response",
+                        "schema": {
+                            "$ref": "#/definitions/AllSeasonsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/team": {
+            "put": {
+                "tags": [
+                    "team"
+                ],
+                "summary": "Add a new Team",
+                "description": "Add a new Team. Source located at [https://github.com/ianfmc/RWPAddTeam.git](https://github.com/ianfmc/RWPAddTeam.git)",
+                "operationId": "newteam",
+                "parameters": [
+                    {
+                        "name": "teamobject",
+                        "description": "team properties",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Team"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/NewObjectResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Season": {
+            "required": [
+                "Name",
+                "StartDate",
+                "EndDate"
+            ],
+            "type": "object",
+            "properties": {
+                "SeasonID": {
+                    "type": "string",
+                    "description": "Season ID (object key). ID is assigned the by application. Use 0 for a new team"
+                },
+                "Name": {
+                    "type": "string",
+                    "description": "Name of the Season"
+                },
+                "StartDate": {
+                    "type": "string",
+                    "description": "Start date of the Season"
+                },
+                "EndDate": {
+                    "type": "string",
+                    "description": "End date of the Season"
+                }
+            }
+        },
+        "NewObjectResponse": {
+            "type": "object",
+            "properties": {
+                "objectID": {
+                    "type": "string",
+                    "description": "new object's ID"
+                }
+            }
+        },
+        "AllSeasonsResponse": {
+            "type": "object",
+            "properties": {
+                "Seasons": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "SeasonID": {
+                                "type": "string",
+                                "description": "Season ID (object key). ID is assigned by the application. Use 0 for a new team"
+                            },
+                            "Name": {
+                                "type": "string",
+                                "description": "Name of the Season"
+                            },
+                            "StartDate": {
+                                "type": "string",
+                                "description": "Start date of the Season"
+                            },
+                            "EndDate": {
+                                "type": "string",
+                                "description": "End date of the Season"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Team": {
+            "type": "object",
+            "properties": {
+                "TeamID": {
+                    "type": "string",
+                    "description": "Team ID (object key). ID is assigned by application. Use 0 for a new team"
+                },
+                "Name": {
+                    "type": "string",
+                    "description": "Team name"
+                },
+                "Season": {
+                    "type": "string",
+                    "description": "seasonID for the team"
+                },
+                "Coach": {
+                    "type": "object",
+                    "properties": {
+                        "FirstName": {
+                            "type": "string",
+                            "description": "Coach's First Name"
+                        },
+                        "LastName": {
+                            "type": "string",
+                            "description": "Coach's Last Name"
+                        },
+                        "Email": {
+                            "type": "string",
+                            "description": "Coach's Email"
+                        }
+                    }
+                },
+                "Manager": {
+                    "type": "object",
+                    "properties": {
+                        "FirstName": {
+                            "type": "string",
+                            "description": "Manager's First Name"
+                        },
+                        "LastName": {
+                            "type": "string",
+                            "description": "Manager's Last Name"
+                        },
+                        "Email": {
+                            "type": "string",
+                            "description": "Manager's Email"
+                        }
+                    }
+                },
+                "Players": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "FirstName": {
+                                "type": "string",
+                                "description": "Players's First Name"
+                            },
+                            "LastName": {
+                                "type": "string",
+                                "description": "Players's Last Name"
+                            },
+                            "Position": {
+                                "type": "string",
+                                "description": "Players's position"
+                            },
+                            "CapNumber": {
+                                "type": "string",
+                                "description": "Player's (Cap) number"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
